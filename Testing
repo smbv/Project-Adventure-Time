@@ -1,0 +1,70 @@
+def Project2():
+  CMD_DUNGEON = 'b'
+  CMD_CLOSE = 'c'
+  CMD_EAST = 'e'
+  CMD_BRIBE = 'f'
+  CMD_GET = 'g'
+  CMD_LOCK = 'l'
+  CMD_NORTH = 'n'
+  CMD_OPEN = 'o'
+  CMD_PUT = 'p'
+  CMD_QUIT = 'q'
+  CMD_SOUTH = 's'
+  CMD_CROWD = 't'
+  CMD_UNLOCK = 'u'
+  CMD_WEST = 'w'
+  ROOM_FRONT_GATE = 0
+  ROOM_MEETING_GROUNDS = 1
+  ROOM_ARMORY = 2
+  ROOM_TOWN_HALL = 3
+  ROOM_DUNGEON = 4
+  ROOM_NAMES = ("Front gate", "Meeting Grounds", "Armory", "Town Hall", "Dungeon")
+  flag_monster_alive = True
+  flag_crowd_rambling = False #tv_on
+  location = 0
+  turns_taken = 0
+  print("What a beautiful day it is. You had just woken up and decided to go on an adventure. Let's go!")
+  print()
+  print("CIIC 3015 Autumn 2021 Project 2: Adventure Time")
+  print()
+  while flag_monster_alive:
+    print("Location: ", ROOM_NAMES[location])
+    cmd = input("> ")
+    turns_taken += 1
+    if cmd == CMD_QUIT:
+        print("Till the next adventure!")
+        return False
+    if location == ROOM_FRONT_GATE:
+        if cmd == CMD_EAST:
+            print("You entered the Meeting Grounds.")
+            location = ROOM_MEETING_GROUNDS
+            continue
+        if location == ROOM_MEETING_GROUNDS:
+            if cmd == CMD_CROWD:
+                if flag_crowd_rambling:
+                    print("The crowd is rambling")
+                else:
+                    print("The crowd started rambling")
+                flag_crowd_rambling = not flag_crowd_rambling
+            continue
+        if cmd == CMD_WEST:
+            #outside
+            print("You still have a mission to do!")
+
+            continue
+
+        if cmd == CMD_EAST:
+            #townhall
+            print("You entered the Town Hall.")
+            location = ROOM_TOWN_HALL
+        if cmd == CMD_SOUTH:
+            # armory
+            print("You entered the armory.")
+            location = ROOM_ARMORY
+        if cmd == CMD_NORTH:
+            print("You entered the Dungeon.")
+            location = ROOM_DUNGEON
+    print("Illegal command.")
+    print(turns_taken, "turns played.")
+    return True
+Project2()
