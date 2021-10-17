@@ -1,5 +1,5 @@
 def Project2():
-  CMD_DUNGEON = 'b'
+  CMD_SLAY = 'b'
   CMD_CLOSE = 'c'
   CMD_EAST = 'e'
   CMD_BRIBE = 'f'
@@ -21,8 +21,22 @@ def Project2():
   ROOM_NAMES = ("Front gate", "Meeting Grounds", "Armory", "Town Hall", "Dungeon")
   flag_monster_alive = True
   flag_crowd_rambling = False #tv_on
+  chest_unlocked = False
+  KEY = False
+  coins = False
+  Tresure = False
+  guard_bribed = False
+  locker_unlocked = False
+  locker_open = False
+  Locker_treasure = False
   location = 0
   turns_taken = 0
+  x = ''
+  y = ''
+  z = ''
+  h = ''
+
+
   print("What a beautiful day it is. You had just woken up and decided to go on an adventure. Let's go!")
   print()
   print("CIIC 3015 Autumn 2021 Project 2: Adventure Time")
@@ -38,33 +52,283 @@ def Project2():
         if cmd == CMD_EAST:
             print("You entered the Meeting Grounds.")
             location = ROOM_MEETING_GROUNDS
+            print('The village gathers')
             continue
-        if location == ROOM_MEETING_GROUNDS:
-            if cmd == CMD_CROWD:
-                if flag_crowd_rambling:
-                    print("The crowd is rambling")
-                else:
-                    print("The crowd started rambling")
-                flag_crowd_rambling = not flag_crowd_rambling
+    if location == ROOM_MEETING_GROUNDS:
+        print('You see a guard standing on the dugeon gate')#to be changed
+        if flag_crowd_rambling == True:
+            print('The crowd is talking')
+        elif flag_crowd_rambling == False:
+            print('The crowd is quiet')
+
+        if cmd == CMD_CROWD:
+            # make if statement declaring if key was already taken or not!
+            if flag_crowd_rambling:
+                print("The crowd is rambling")
+            else:
+                print("The crowd started rambling")
+            flag_crowd_rambling = not flag_crowd_rambling
             continue
+        if cmd == CMD_BRIBE:
+            # make if statement declaring if key was already taken or not!
+            if flag_crowd_rambling == True:
+                guard_bribed = True
+                continue
+            elif flag_crowd_rambling == False:
+                print('it seems the crowd is quiet, it makes the guard shy')
+                continue
+
+
         if cmd == CMD_WEST:
             #outside
             print("You still have a mission to do!")
-
             continue
 
         if cmd == CMD_EAST:
             #townhall
             print("You entered the Town Hall.")
             location = ROOM_TOWN_HALL
+            continue
+
         if cmd == CMD_SOUTH:
             # armory
             print("You entered the armory.")
             location = ROOM_ARMORY
+            continue
+
         if cmd == CMD_NORTH:
-            print("You entered the Dungeon.")
-            location = ROOM_DUNGEON
-    print("Illegal command.")
-    print(turns_taken, "turns played.")
-    return True
+            # make if statement declaring if key was already taken or not!
+            if guard_bribed == True:
+                print("You entered the Dungeon.")
+                location = ROOM_DUNGEON
+                continue
+            elif guard_bribed == False:
+                print('The guard does not let you pass')
+                print('Guard: YOU SHALL NOT PASS')
+                continue
+
+    if location == ROOM_TOWN_HALL:
+        print('you see a chest in the corner of the room') #to me better written
+        #if chest_unlocked == True:
+            #print('The chest is unlocked')
+            #continue
+        #elif chest_unlocked == False:
+            #print('The Chest is locked')
+            #print('Want to unlock it?')
+            #continue
+        if cmd == CMD_OPEN:
+            print('Whats the combination for the chest?')
+            print('Hint: CollatZ after 42') #to be changed
+            x += str(input('first digits? '))
+            y += str(input('second digits? '))
+            z += str(input('third digits? '))
+            if x == '21' and y == '64' and z == '32':
+                print('Yey you did it!') #tobechanged
+                print('You see a key glowing inside')
+                print('Want to grab it?')
+                chest_unlocked = True
+                continue
+            else:
+                print('Wrong dial, try again')
+                x = ''
+                y = ''
+                z = ''
+                continue
+        elif cmd == CMD_CLOSE:
+            if chest_unlocked == False:
+                print('its already closed')
+                continue
+            elif chest_unlocked == True:
+                print('you have closed the chest')
+                chest_unlocked = False
+                continue
+        elif cmd == CMD_GET:
+            #make if statement declaring if key was already taken or not!
+            if chest_unlocked == True:
+                KEY = True
+                print('Wow that is a shiny key')
+                continue
+            elif chest_unlocked == False:
+                print('It appears you forgot a vital step, unlocking the chest lol') # to be changed
+                continue
+        elif cmd == CMD_PUT:
+            if chest_unlocked == True:
+                KEY = False
+                print('The key goes back to the safe')
+                continue
+            if chest_unlocked == False:
+                print('You cant put something into something thats closed')
+                continue
+        elif cmd == CMD_LOCK:
+            chest_unlocked = False
+            continue
+
+        if cmd == CMD_EAST:
+            print('You cant exit through the wall')
+            continue
+
+        elif cmd == CMD_NORTH:
+            print('You cant exit through the wall')
+            continue
+
+        elif cmd == CMD_SOUTH:
+            print('You cant exit through the wall')
+            continue
+
+        elif cmd == CMD_WEST:
+            print('You entered the Meeting Grounds.')
+            location = ROOM_MEETING_GROUNDS
+            continue
+    if location == ROOM_ARMORY:
+        print('You see a strange locker with a key hole')
+        print('want to unlock it?')
+        if cmd == CMD_UNLOCK:
+            if KEY == True:
+                locker_unlocked = True
+                print('You have unlocked the locker!')
+                continue
+            elif KEY == False:
+                print('You dont have a key dummy')
+                continue
+        if cmd == CMD_OPEN:
+            if locker_unlocked == True:
+                locker_open = True
+                print('you have open the locker!')
+                print('You see a bag of coins')
+                print('Want to grab it?')
+                continue
+            elif locker_unlocked == False:
+                print('its locked, how are you going to open it?')
+                continue
+        if cmd == CMD_CLOSE:
+            if locker_open == False:
+                print('its already closed')
+                continue
+            elif locker_open == True:
+                locker_open = False
+                continue
+        if cmd == CMD_GET:
+            # make if statement declaring if key was already taken or not!
+            if locker_open == True:
+                coins = True
+                print('Wow that is a lot of coins')
+                continue
+            elif locker_open == False:
+                print('It appears you forgot a vital step, opening the locker lol') # to be changed
+                continue
+        if cmd == CMD_PUT:
+            if locker_open == True:
+                if Tresure == True:
+                    if Locker_treasure == False:
+                        Tresure = False
+                        Locker_treasure = True
+                        continue
+                    elif Locker_treasure == True:
+                        print('You have already stored the treasure dude')
+                        continue
+                elif Tresure == False:
+                    print('you havent collected the treasure dummy')
+                    continue
+            elif locker_open == False:
+                print('how are you gonna store it if its closed?')
+                continue
+
+        if cmd == CMD_LOCK:
+            if locker_open == True:
+                print('you forgot to close it first!')
+                continue
+            elif locker_open == False:
+                print('nice you locked the locker')
+                locker_unlocked = False
+                continue
+
+        if cmd == CMD_EAST:
+            print('You cant exit through the wall')
+            continue
+
+        if cmd == CMD_NORTH:
+            location = ROOM_MEETING_GROUNDS
+            print('You entered the meeting grounds')
+            continue
+
+        if cmd == CMD_SOUTH:
+            print('You cant exit through the wall')
+            continue
+
+        if cmd == CMD_WEST:
+            print('You cant exit through the wall')
+            continue
+
+
+    if location == ROOM_DUNGEON:
+        print('You see an angry monster')
+        print('you see some shiny treasure, want to pick it up?')
+        if cmd == CMD_GET:
+            if Tresure == True:
+                print('you already got the treasure bro')
+                continue
+            elif Tresure == False:
+                Tresure = True
+                Locker_treasure = False
+                print('Congrats you collected the Treasure')
+                print('You should probably store this away in your locker')
+                continue
+        if cmd == CMD_SLAY:
+            if flag_crowd_rambling == False:
+                if locker_open == False:
+                    if locker_unlocked == False:
+                        if KEY == False:
+                            if chest_unlocked == False:
+                                if Tresure == False:
+                                    if Locker_treasure == True:
+                                        print('congrats you slayed the monster')
+                                        print('the village cheers for you')
+                                        print('The monster babies cry')
+                                        flag_monster_alive = False
+
+                                    elif Locker_treasure == False:
+                                        print('you should put that away')
+                                        continue
+                                elif Tresure == True:
+                                    print('you should put that away')
+                                    continue
+                            elif chest_unlocked == True:
+                                print('You should lock the chest')
+                                continue
+                        elif KEY == True:
+                            print('You still have the key')
+                            continue
+                    elif locker_unlocked == True:
+                        print('You should lock the locker')
+                        continue
+                elif locker_open == True:
+                    print('you should close the locker before that')
+                    continue
+            elif flag_crowd_rambling == True:
+                print('you should quiet down the crowd to concentrate on the fight')
+                continue
+        if cmd == CMD_EAST:
+            print('You cant exit through the wall')
+            continue
+
+        if cmd == CMD_NORTH:
+            print('You cant exit through the wall')
+            continue
+
+        if cmd == CMD_SOUTH:
+            location = ROOM_MEETING_GROUNDS
+            print('You entered the meeting grounds')
+            continue
+
+        if cmd == CMD_WEST:
+            print('You cant exit through the wall')
+            continue
+    if flag_monster_alive == True:
+        print("Illegal command.")
+        print(turns_taken, "turns played.")
+        return False
+    elif flag_monster_alive == False:
+        print('Congratiolations you have won the game')
+        print(turns_taken, "turns played.")
+        return True
 Project2()
