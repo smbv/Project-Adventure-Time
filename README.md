@@ -16,8 +16,6 @@
 
 Welcome to "Project: Adventure Time," a whimsical text-based adventure game filled with humor, challenging puzzles, and quirky interactions. Embark on a unique journey through a fictional world where you'll encounter amusing characters and face bizarre challenges.
 
-![Adventure Time Screenshot](adventure_time_screenshot.png)
-
 ## About
 
 This project was created by [Sofia M. Barrera Vega](https://github.com/smbv) and [Nestor S. Frontera Rocher](https://github.com/nsfrontera) as a fun and entertaining programming exercise. The game is designed to provide players with an enjoyable and light-hearted experience, complete with witty commentary and playful responses to their choices.
